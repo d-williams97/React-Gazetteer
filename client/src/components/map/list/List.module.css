@@ -1,0 +1,14 @@
+.list{
+    position: absolute; /* positioned absolutely relative to its closest positioned ancestor */
+    top: 10px;
+    left: 50%;
+    transform: translateX(
+      -50%
+    ); /* This transform property is used to horizontally center the element within its positioned parent. It moves the element left by 50% of its own width, */
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0); /* Transparent */
+    padding: 11px 15px;
+    border-radius: 5px;
+    width: 300px;
+    height: 20rem;
+}

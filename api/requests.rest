@@ -1,0 +1,6 @@
+GET http://localhost:3001/country-data
+
+###
+
+GET http://localhost:3001/bounds-data/uganda
+

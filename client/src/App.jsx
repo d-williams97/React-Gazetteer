@@ -18,30 +18,30 @@ useEffect(() => { // For loading the preloader
 },[])
 
 
-useEffect(() => { // for getting geolocation data
-  getGeolocation();
-},[])
+// useEffect(() => { // for getting geolocation data
+//   getGeolocation();
+// },[])
 
+// const showPosition = (position) => {
+//   const {latitude,longitude} = position.coords;
+//      setLocation({latitude, longitude})
+// }
 
+// const geoError = (err) => {
+//   console.error(`Error: ${err.message}`);
+//   let latitude = 0;
+//   let longitude = 0;
+//   setLocation({latitude, longitude})
 
-const showPosition = (position) => {
-  const {latitude,longitude} = position.coords;
-     setLocation({latitude, longitude})
-}
+// }
 
-const geoError = (err) => {
-  console.error(`Error: ${err.message}`);
-  let latitude = 0;
-  let longitude = 0;
-  setLocation({latitude, longitude})
-}
+// // Getting Geolocation data
+// const getGeolocation = () => {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(showPosition, geoError)
+//   }
 
-// Getting Geolocation data
-const getGeolocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, geoError)
-  }
-  }
+//   }
 
 
 

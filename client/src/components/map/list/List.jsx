@@ -11,42 +11,15 @@ let countryName;
 let countryCode;
 
 const List = (props) => {
-    console.log(props.border)
-
+  
     const map = useMap();
-    
-  const [countryData, setCountryData] = useState(null);
-
-  //get data
-  useEffect(() => {
-    // For getting country data
-    getCountries();
-  }, []);
-
-
-  // Getting country data for select
-  const getCountries = async () => {
-    const data = await fetch(`${API_BASE}/country-data`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCountryData(data);
-        console.log(data);        
-      })
-      .catch((err) => console.error("Error: ", err));    
-  }
-
-
-
 
   const getBoundsHandler = async (countryName) => {
     const data = await fetch (`${API_BASE}/bounds-data/${countryName}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.bounds);
       let bounds = [Object.values(data.bounds.southwest), Object.values(data.bounds.northeast)];
-
       map.fitBounds(bounds);
-    
     })
     .catch((err) => {
       console.error("Error: ", err)
@@ -57,14 +30,19 @@ const List = (props) => {
 
 
 
-
 // country change event //
-const changeCountryHandler = (value) => {
-    let selectedCountry = countryData.find(country => country.properties.iso_a2 === value);
+const changeCountryHandler = async (value) => {
+    let selectedCountry = props.countryData.find(country => country.properties.iso_a2 === value);
     countryName = selectedCountry.properties.name;
     countryCode = value;
     props.borderHandler(selectedCountry);
-    getBoundsHandler(countryName);
+    props.getAirports(countryCode);
+    
+    // props.airport data so that 
+
+    getBoundsHandler(countryName); // changes map view
+
+ 
 
 }
 
@@ -78,7 +56,7 @@ const changeCountryHandler = (value) => {
         changeCountryHandler(e.target.value);
      
       }}>
-        {countryData && countryData.map(country => (
+        {props.countryData && props.countryData.map(country => (
         <option value={country.properties.iso_a2} key={country.key}>{country.properties.name}</option>
       ))}
    </Form.Select>

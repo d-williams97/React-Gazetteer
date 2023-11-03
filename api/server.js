@@ -37,8 +37,10 @@ app.get('/bounds-data/:countryName', async (req, res) => {
         
         // fetch data
         let url = `https://api.opencagedata.com/geocode/v1/json?q=${countryName}&key=e3489716a6574283b20a91a3349be943&pretty=1`;
-        const response = await axios.get(url).catch((e) => {
+        const response = await axios.get(url)
+        .catch((e) => {
             console.error('Error getting API data', e)
+            res.status(500).json({error: 'internal server error', err})
         })
 
         res.status(200).json(response.data.results[0])
@@ -49,6 +51,48 @@ app.get('/bounds-data/:countryName', async (req, res) => {
 
     }
 })
+
+
+// --- Getting Airport data --- //
+
+app.post('/city-data', async (req, res) => {
+    try {
+        let countryCodeData = req.body.countryCode;
+        let countryCode = countryCodeData.replace('-99', 'SO');
+        let url = `http://api.geonames.org/searchJSON?q=airport&country=${countryCode}&maxRows=50&username=kwasimodo`
+
+        const response = await axios.get(url)
+        .catch((e) => {
+            console.error('Error getting API data: ',e)
+            res.status(500).json({error: 'Error getting API data', err})
+        })
+
+        let airportData = [];
+        response.data.geonames.forEach((e) => {
+            let obj = {};
+            obj.lng = e.lng;
+            obj.lat = e.lat;
+            obj.name = e.name;
+
+            airportData.push(obj)
+        } )
+
+        res.status(200).json(airportData);
+
+
+    } catch (e) {
+        console.error('Error getting airport API data: ',e)
+        res.status(500).json({error: 'Error getting API data', err})
+        
+
+    }
+
+})
+
+
+
+
+
 
 app.listen(3001, () => {
     console.log('app is running')

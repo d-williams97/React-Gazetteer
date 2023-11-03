@@ -35,11 +35,9 @@ const changeCountryHandler = async (value) => {
     let selectedCountry = props.countryData.find(country => country.properties.iso_a2 === value);
     countryName = selectedCountry.properties.name;
     countryCode = value;
-    props.borderHandler(selectedCountry);
-    props.getAirports(countryCode);
-    
-    // props.airport data so that 
-
+    props.borderHandler(selectedCountry); // getting border
+    props.getAirports(countryCode); // getting airport data 
+    props.getCities(countryCode); // getting city data 
     getBoundsHandler(countryName); // changes map view
 
  

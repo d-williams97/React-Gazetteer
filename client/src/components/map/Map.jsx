@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 
 import List from "./list/List";
 import MapLayers from "./mapLayers/MapLayers";
+import Airports from "./mapLayers/airports/Airports";
 
 const API_BASE = "http://localhost:3001";
 
@@ -34,6 +35,11 @@ const Map = (props) => {
     setBorder(x);
   };
 
+
+// ------- Airports ---------- //
+
+  const [airports, setAirports] = useState(null)
+
   // Getting Airport data
   const airportsHandler = async (countryCode) => {
     let data = await fetch(`${API_BASE}/city-data`, {
@@ -47,9 +53,9 @@ const Map = (props) => {
     })
       .then((res) => res.json())
       .catch(e => console.error('Error', e))
-
-      console.log(data);
+      setAirports(data);
   };
+
 
   return (
     <>
@@ -60,6 +66,7 @@ const Map = (props) => {
           getAirports={airportsHandler}
         />
         <MapLayers />
+        < Airports airports={airports} />
         <GeoJSON
           data={border ? border : ""}
           key={JSON.stringify(border)}

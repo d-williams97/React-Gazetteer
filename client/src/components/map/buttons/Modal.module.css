@@ -1,0 +1,25 @@
+.basicDataModal {
+    background-color: rgb(45, 45, 248);;
+}
+
+.basicIcon {
+    color: rgb(45, 45, 248);
+}
+
+
+.basicDataTitle {
+    color: white;
+}
+
+.flag {
+    height: 4rem;
+}
+
+.td {
+    display: flex;
+    justify-content: end;
+}
+
+.table {
+    font-size: large;
+}

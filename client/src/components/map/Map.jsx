@@ -9,6 +9,7 @@ import List from "./list/List";
 import MapLayers from "./mapLayers/MapLayers";
 import Airports from "./airports/Airports";
 import Cities from "./cities/Cities";
+import BasicDataBtn from "./buttons/BasicDataBtn";
 
 const API_BASE = "http://localhost:3001";
 
@@ -30,10 +31,10 @@ const Map = (props) => {
   }, []);
 
   // Getting the border
-  const [border, setBorder] = useState(null);
+  const [geoJsonData, setGeoJsonData] = useState(null);
 
   const borderHandler = (x) => {
-    setBorder(x);
+    setGeoJsonData(x);
   };
 
 
@@ -41,7 +42,7 @@ const Map = (props) => {
 
   const [airports, setAirports] = useState(null)
 
-  // Getting Airport data
+  // Getting Airport data //
   const airportsHandler = async (countryCode) => {
     let data = await fetch(`${API_BASE}/airport-data`, {
       method: "POST",
@@ -60,11 +61,11 @@ const Map = (props) => {
 
 
 
-  // ------- Airports ---------- //
+  // ------- Cities ---------- //
 
 const [cities, setCities] = useState(null);
 
-
+  // Getting City data //
   const citiesHandler = async (countryCode) => {
 
     let data = await fetch(`${API_BASE}/city-data`, {
@@ -88,6 +89,7 @@ const [cities, setCities] = useState(null);
   return (
     <>
       <MapContainer center={[0, 0]} zoom={2} scrollWheelZoom={true} minZoom={1}>
+      <BasicDataBtn geoJsonData={geoJsonData} />
         <List
           borderHandler={borderHandler}
           countryData={countryData}
@@ -98,8 +100,8 @@ const [cities, setCities] = useState(null);
         < Airports airports={airports} />
         < Cities cities={cities} />
         <GeoJSON
-          data={border}
-          key={JSON.stringify(border)}
+          data={geoJsonData}
+          key={JSON.stringify(geoJsonData)}
           style={{
             color: "red",
             weight: 1,

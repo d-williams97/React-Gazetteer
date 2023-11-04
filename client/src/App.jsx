@@ -14,7 +14,7 @@ useEffect(() => { // For loading the preloader
   setLoading(true);
   setTimeout(() => {
     setLoading(false);
-  }, 3000)
+  }, 2000)
 },[])
 
 

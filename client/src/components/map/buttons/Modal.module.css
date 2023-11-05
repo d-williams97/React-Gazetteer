@@ -12,7 +12,11 @@
 }
 
 .flag {
-    height: 4rem;
+    width: 10rem;
+}
+
+.flag2 {
+    font-size: 4rem;
 }
 
 .td {

@@ -10,6 +10,7 @@ import MapLayers from "./mapLayers/MapLayers";
 import Airports from "./airports/Airports";
 import Cities from "./cities/Cities";
 import BasicDataBtn from "./buttons/BasicDataBtn";
+import WeatherBtn from "./buttons/WeatherBtn";
 
 const API_BASE = "http://localhost:3001";
 
@@ -59,8 +60,6 @@ const Map = (props) => {
   };
 
 
-
-
   // ------- Cities ---------- //
 
 const [cities, setCities] = useState(null);
@@ -90,6 +89,7 @@ const [cities, setCities] = useState(null);
     <>
       <MapContainer center={[0, 0]} zoom={2} scrollWheelZoom={true} minZoom={1}>
       <BasicDataBtn geoJsonData={geoJsonData} />
+      <WeatherBtn geoJsonData={geoJsonData} />
         <List
           borderHandler={borderHandler}
           countryData={countryData}

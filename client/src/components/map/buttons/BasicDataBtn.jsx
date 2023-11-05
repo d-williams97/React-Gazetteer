@@ -24,8 +24,6 @@ const BasicDataBtn = (props) => {
   const [flag, setFlag] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(props.geoJsonData)
-
   useEffect(() => { // For loading the preloader
     setLoading(true);
     setTimeout(() => {
@@ -43,6 +41,7 @@ const BasicDataBtn = (props) => {
     .catch(e => console.error('Error: ', e));
 
     setBasicData(data.geonames[0]);
+    console.log(basicData);
 
     const flag = await fetch(`${API_BASE}/flag-data/${props.geoJsonData.properties.name}`)
     .then(res => res.json())
@@ -59,11 +58,10 @@ const BasicDataBtn = (props) => {
 
   return (
     <>
-      <button className={styles.button}>
+      <button className={styles.button} onClick={basicDataBtnHandler} >
         <img
           src={infoIcon}
           className={styles.icon}
-          onClick={basicDataBtnHandler}
         />
       </button>
 
@@ -106,8 +104,10 @@ const BasicDataBtn = (props) => {
         <tr>
           <td><FontAwesomeIcon icon={faFlag} className={modalStyles.basicIcon}/></td>
           <td>Flag</td>
-          <td className={modalStyles.td}>
-            <img src={ flag && flag.flags.png} className={modalStyles.flag} />
+          <td className={modalStyles.td}> { flag && flag ? 
+            <img src={ flag.flags.png} className={modalStyles.flag} /> :
+            <div className={modalStyles.flag2}>{flag.flag}</div>
+          }
           </td>
         </tr>
       </tbody>

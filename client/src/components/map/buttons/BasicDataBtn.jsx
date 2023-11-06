@@ -41,8 +41,7 @@ const BasicDataBtn = (props) => {
     .catch(e => console.error('Error: ', e));
 
     setBasicData(data.geonames[0]);
-    console.log(basicData);
-
+    
     const flag = await fetch(`${API_BASE}/flag-data/${props.geoJsonData.properties.name}`)
     .then(res => res.json())
     .catch(e => console.error('Error', e))

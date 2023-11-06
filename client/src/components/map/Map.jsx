@@ -11,6 +11,8 @@ import Airports from "./airports/Airports";
 import Cities from "./cities/Cities";
 import BasicDataBtn from "./buttons/BasicDataBtn";
 import WeatherBtn from "./buttons/WeatherBtn";
+import WikiBtn from "./buttons/WikiBtn";
+import ExchangeRateBtn from "./buttons/ExchangeRateBtn";
 
 const API_BASE = "http://localhost:3001";
 
@@ -90,6 +92,8 @@ const [cities, setCities] = useState(null);
       <MapContainer center={[0, 0]} zoom={2} scrollWheelZoom={true} minZoom={1}>
       <BasicDataBtn geoJsonData={geoJsonData} />
       <WeatherBtn geoJsonData={geoJsonData} />
+      <WikiBtn geoJsonData={geoJsonData} />
+      <ExchangeRateBtn geoJsonData={geoJsonData} />
         <List
           borderHandler={borderHandler}
           countryData={countryData}

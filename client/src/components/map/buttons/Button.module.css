@@ -28,6 +28,36 @@
     justify-content: center;
 }
 
+.wikiBtn {
+    position: absolute; /* positioned absolutely relative to its closest positioned ancestor */
+    top: 11rem;
+    z-index: 1000;
+    background-color: white; /* Transparent */
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    margin-left: 0.7rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.erBtn {
+    position: absolute; /* positioned absolutely relative to its closest positioned ancestor */
+    top: 14rem;
+    z-index: 1000;
+    background-color: white; /* Transparent */
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    margin-left: 0.7rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .icon {
     height: 65%;
     /* object-fit: contain; */

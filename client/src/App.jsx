@@ -1,8 +1,9 @@
 import './App.css';
 import {useState , useEffect} from 'react'
-import Preloader from './components/preloader/Preloader';
 
+import Preloader from './components/preloader/Preloader';
 import Map from './components/map/Map';
+import Reduce from './components/UseReducer/UseReducer';
 
 
 
@@ -52,9 +53,9 @@ useEffect(() => { // For loading the preloader
 
   return (
     <div className="App">
-      {/* <Preloader loading={loading} /> */}
+      {/* <Preloader loading={loading} />  */}
       <Map location={location}/>
-
+      {/* <Reduce /> */}
     </div>
   );
 }

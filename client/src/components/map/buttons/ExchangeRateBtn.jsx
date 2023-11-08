@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 
 import ModalPreloader from "../../modal preloader/ModalPreloader";
 
@@ -14,52 +14,73 @@ import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 const API_BASE = "http://localhost:3001";
 
 const ExchangeRateBtn = (props) => {
+
+  let countryCode;
+
   const [modalShow, setModalShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [currencyData, setCurrencyData] = useState(false);
-  const [er, setEr] = useState(false);
+
+  const initialState = {
+    value: 1,
+    erValue: 0,
+    totalConverted: 0,
+    currencyData: null
+  }
+
+  const convertedReducer = (state, action) => {
+    switch(action.type) {
+      case 'SET_VALUE' :
+        return{...state, value: action.payload, totalConverted: action.payload * state.erValue};
+      case 'SET_ER_VALUE' : 
+        return{...state, erValue: action.payload, totalConverted: state.value * action.payload};
+      case 'SET_CURRENCY_DATA': {
+        return {...state, currencyData: action.payload}
+      }
+    }
+  }
+
+  const [state, dispatch] = useReducer(convertedReducer,initialState)
 
 
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
-  },[er]);
+    }, 1200);
+  },[state.currencyData]);
 
   const erBtnHandler = async () => {
     setModalShow(true);
-    const currency = await fetch(
+    
+    await fetch(
       `${API_BASE}/currency/${props.geoJsonData.properties.iso_a2}`
     )
       .then((res) => res.json())
+      .then((data) => {
+        countryCode = Object.keys(data)[0];
+        dispatch({type: 'SET_CURRENCY_DATA', payload: data[countryCode]})
+      })
       .catch((e) => console.error("Error", e));
-      setCurrencyData(currency);
      
-      const exchangeRate = await fetch(
-        `${API_BASE}/er/`
-      )
+    await fetch(
+        `${API_BASE}/er/`)
         .then((res) => res.json())
-        .catch((e) => console.error("Error", e));
-
-        setEr(exchangeRate);
+        .then((data) => {
+          dispatch({type:'SET_ER_VALUE', payload: numeral(data.rates[countryCode]).format('0.0')})
+        })
+        .catch((e) => console.error("Error", e));   
   };
 
   const handleModalClose = () => {
     setModalShow(false);
-    setEr(false);
+    dispatch({type:'SET_CURRENCY_DATA', payload: null})
+
   };
 
-
-  let code;
-  let rate;
-  if (er) {
-    code = Object.keys(currencyData)[0];
-    rate = er.rates[code];
-    console.log(rate)
-
-
+  const changeCurrencyHandler = (value) => {
+    dispatch({type: 'SET_VALUE', payload: value})
   }
+
 
   return (
     <>
@@ -67,48 +88,52 @@ const ExchangeRateBtn = (props) => {
         <FontAwesomeIcon icon={faDollarSign} />
       </button>
 
-      {er && (
+      {state.currencyData && (
         <Modal
           show={modalShow}
           onHide={handleModalClose}
           animation={true}
           centered
         >
-          {/* <ModalPreloader loading={loading} /> */}
+          <ModalPreloader loading={loading} />
           <Modal.Header className={modalStyles.basicDataModal}>
             <Modal.Title
               className={modalStyles.basicDataTitle}
             >{`Exchange Rate - ${props.geoJsonData.properties.name}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          {/* <form>
-                    <div class="form-floating mb-3">
-                      <input
-                        id="fromValue"
-                        type="number"
-                        class="form-control"
-                        value="1"
-                        min="1"
-                        step="1"
-                      />
-                      <label for="fromValue">From USD</label>
-                    </div>
+           <form>
+                <div className="form-floating mb-3">
+                  <input
+                    id="formValue"
+                    type="number"
+                    className="form-control"
+                    value={state.value}
+                    min="1"
+                    step="1"
+                    onChange={(e) => {
+                      changeCurrencyHandler(e.target.value)
+                    }}
+                  />
+                  <label htmlFor="fromValue">From USD</label>
+                </div>
 
-                    <div class="form-floating mb-3">
-                      <input id="exchangeRate" class="form-control" disabled />
-                      <label for="exchangeRate">Convert to</label>
-                    </div>
+                <div className="form-floating mb-3">
+                  <input id="exchangeRate" className="form-control" disabled value={state.currencyData.name} />
+                  <label htmlFor="exchangeRate">Convert to</label>
+                </div>
 
-                    <div class="form-floating">
-                      <input
-                        id="erResult"
-                        type="text"
-                        class="form-control"
-                        disabled
-                      />
-                      <label for="erResult">Result</label>
-                    </div>
-                  </form> */}
+                <div className="form-floating">
+                  <input
+                    id="erResult"
+                    type="text"
+                    className="form-control"
+                    disabled
+                    value={`${state.currencyData.symbol}${state.totalConverted}`}
+                  />
+                  <label htmlFor="erResult">Result</label>
+                </div>
+              </form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="outline-primary" onClick={handleModalClose}>

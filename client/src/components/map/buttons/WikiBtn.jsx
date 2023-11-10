@@ -23,7 +23,7 @@ const WikiBtn = (props) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 4000);
   }, [modalShow]);
 
   const wikiBtnHandler = async () => {

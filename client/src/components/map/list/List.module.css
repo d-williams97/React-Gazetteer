@@ -12,3 +12,13 @@
     width: 300px;
     height: 20rem;
 }
+
+
+
+
+@media screen and (max-width: 410px ) {
+  .list {
+    width: 200px;
+  }
+
+}

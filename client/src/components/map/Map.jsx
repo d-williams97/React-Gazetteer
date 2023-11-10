@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { MapContainer, GeoJSON } from "react-leaflet";
 
-import styles from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 
 import List from "./list/List";
@@ -13,12 +12,14 @@ import BasicDataBtn from "./buttons/BasicDataBtn";
 import WeatherBtn from "./buttons/WeatherBtn";
 import WikiBtn from "./buttons/WikiBtn";
 import ExchangeRateBtn from "./buttons/ExchangeRateBtn";
+import TimeZoneBtn from "./buttons/TimeZoneBtn";
 
 const API_BASE = "http://localhost:3001";
 
 const Map = (props) => {
   // Getting country data for select
   const [countryData, setCountryData] = useState(null);
+
 
   const getCountries = async () => {
     const data = await fetch(`${API_BASE}/country-data`)
@@ -29,9 +30,13 @@ const Map = (props) => {
       .catch((err) => console.error("Error: ", err));
   };
 
+
+
   useEffect(() => {
     getCountries();
   }, []);
+
+
 
   // Getting the border
   const [geoJsonData, setGeoJsonData] = useState(null);
@@ -94,11 +99,14 @@ const [cities, setCities] = useState(null);
       <WeatherBtn geoJsonData={geoJsonData} />
       <WikiBtn geoJsonData={geoJsonData} />
       <ExchangeRateBtn geoJsonData={geoJsonData} />
+      <TimeZoneBtn geoJsonData={geoJsonData} />
         <List
           borderHandler={borderHandler}
           countryData={countryData}
+          setCountryData={setCountryData}
           getAirports={airportsHandler}
           getCities={citiesHandler}
+          location={props.location}
         />
         <MapLayers />
         < Airports airports={airports} />

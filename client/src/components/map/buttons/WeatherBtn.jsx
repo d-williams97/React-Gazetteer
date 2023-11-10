@@ -25,7 +25,7 @@ const WeatherBtn = (props) => {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, [weatherData]);
+  }, [modalShow]);
 
   const weatherBtnHandler = async () => {
     setModalShow(true);
@@ -114,10 +114,10 @@ const WeatherBtn = (props) => {
   return (
     <>
       <button className={styles.weatherBtn} onClick={weatherBtnHandler}>
-        <FontAwesomeIcon icon={faCloud} />
+        <FontAwesomeIcon icon={faCloud } style={{fontSize: '1.3rem'}} />
       </button>
 
-      {weatherData && (
+       (
         <Modal
           show={modalShow}
           onHide={handleModalClose}
@@ -128,7 +128,7 @@ const WeatherBtn = (props) => {
           <Modal.Header className={modalStyles.basicDataModal}>
             <Modal.Title
               className={modalStyles.basicDataTitle}
-            >{`Weather - ${capitalData} ,${props.geoJsonData.properties.name}`}</Modal.Title>
+            >{ weatherData && `Weather - ${capitalData}, ${props.geoJsonData.properties.name}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="pe-4">
             <Container className="m-2">
@@ -138,7 +138,7 @@ const WeatherBtn = (props) => {
                   <Row>
                     <Col className="text-center m-3">
                       <p className="fw-bold fs-6">
-                        {weatherData.forecast.forecastday[0].day.condition.text}
+                        { weatherData && weatherData.forecast.forecastday[0].day.condition.text}
                       </p>
                     </Col>
                     <Col className="text-center">
@@ -153,14 +153,14 @@ const WeatherBtn = (props) => {
                     <Col className="text-center">
                       <p className="fw-bold fs-4 mb-0">
                         <span>
-                          {weatherData.forecast.forecastday[0].day.maxtemp_c}
+                          { weatherData && weatherData.forecast.forecastday[0].day.maxtemp_c}
                         </span>
                         <sup>o</sup>
                         <span>c</span>
                       </p>
                       <p className="fs-5 mt-0 text-secondary">
                         <span>
-                          {weatherData.forecast.forecastday[0].day.mintemp_c}
+                          {weatherData && weatherData.forecast.forecastday[0].day.mintemp_c}
                         </span>
                         <sup>o</sup>
                         <span>c</span>
@@ -181,13 +181,13 @@ const WeatherBtn = (props) => {
                     <Col className="text-center">
                       <p className="fw-bold fs-4 mb-0">
                         <span>
-                          {weatherData.forecast.forecastday[1].day.maxtemp_c}
+                          {weatherData && weatherData.forecast.forecastday[1].day.maxtemp_c}
                         </span>
                         <sup>o</sup>c
                       </p>
                       <p className="fs-5 mt-0 text-secondary">
                         <span>
-                          {weatherData.forecast.forecastday[0].day.mintemp_c}
+                          {weatherData && weatherData.forecast.forecastday[0].day.mintemp_c}
                         </span>
                         <sup>o</sup>c
                       </p>
@@ -215,13 +215,13 @@ const WeatherBtn = (props) => {
                     <Col className="text-center">
                       <p className="fw-bold fs-4 mb-0">
                         <span>
-                          {weatherData.forecast.forecastday[2].day.maxtemp_c}
+                          {weatherData && weatherData.forecast.forecastday[2].day.maxtemp_c}
                         </span>
                         <sup>o</sup>c
                       </p>
                       <p className="fs-5 mt-0 text-secondary">
                         <span>
-                          {weatherData.forecast.forecastday[2].day.mintemp_c}
+                          {weatherData && weatherData.forecast.forecastday[2].day.mintemp_c}
                         </span>
                         <sup>o</sup>c
                       </p>
@@ -252,7 +252,7 @@ const WeatherBtn = (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
-      )}
+      )
     </>
   );
 };

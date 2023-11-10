@@ -24,15 +24,15 @@ const ExchangeRateBtn = (props) => {
     value: 1,
     erValue: 0,
     totalConverted: 0,
-    currencyData: null
+    currencyData: false
   }
 
   const convertedReducer = (state, action) => {
     switch(action.type) {
       case 'SET_VALUE' :
-        return{...state, value: action.payload, totalConverted: action.payload * state.erValue};
+        return{...state, value: action.payload, totalConverted: numeral(action.payload * state.erValue).format('0.0')};
       case 'SET_ER_VALUE' : 
-        return{...state, erValue: action.payload, totalConverted: state.value * action.payload};
+        return{...state, erValue: action.payload, totalConverted: numeral(state.value * action.payload).format('0.0')};
       case 'SET_CURRENCY_DATA': {
         return {...state, currencyData: action.payload}
       }
@@ -46,8 +46,8 @@ const ExchangeRateBtn = (props) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 1200);
-  },[state.currencyData]);
+    }, 2000);
+  },[modalShow]);
 
   const erBtnHandler = async () => {
     setModalShow(true);
@@ -73,7 +73,7 @@ const ExchangeRateBtn = (props) => {
 
   const handleModalClose = () => {
     setModalShow(false);
-    dispatch({type:'SET_CURRENCY_DATA', payload: null})
+    dispatch({type:'SET_CURRENCY_DATA', payload: false})
 
   };
 
@@ -85,10 +85,10 @@ const ExchangeRateBtn = (props) => {
   return (
     <>
       <button className={styles.erBtn} onClick={erBtnHandler}>
-        <FontAwesomeIcon icon={faDollarSign} />
+        <FontAwesomeIcon icon={faDollarSign} style={{fontSize: '1.5rem'}} />
       </button>
 
-      {state.currencyData && (
+       (
         <Modal
           show={modalShow}
           onHide={handleModalClose}
@@ -99,7 +99,7 @@ const ExchangeRateBtn = (props) => {
           <Modal.Header className={modalStyles.basicDataModal}>
             <Modal.Title
               className={modalStyles.basicDataTitle}
-            >{`Exchange Rate - ${props.geoJsonData.properties.name}`}</Modal.Title>
+            >{state.currencyData && `Exchange Rate - ${props.geoJsonData.properties.name}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
            <form>
@@ -119,7 +119,7 @@ const ExchangeRateBtn = (props) => {
                 </div>
 
                 <div className="form-floating mb-3">
-                  <input id="exchangeRate" className="form-control" disabled value={state.currencyData.name} />
+                  <input id="exchangeRate" className="form-control" disabled value={ state.currencyData && state.currencyData.name} />
                   <label htmlFor="exchangeRate">Convert to</label>
                 </div>
 
@@ -129,7 +129,7 @@ const ExchangeRateBtn = (props) => {
                     type="text"
                     className="form-control"
                     disabled
-                    value={`${state.currencyData.symbol}${state.totalConverted}`}
+                    value={ state.currencyData &&`${state.currencyData.symbol} ${state.totalConverted}`}
                   />
                   <label htmlFor="erResult">Result</label>
                 </div>
@@ -141,7 +141,7 @@ const ExchangeRateBtn = (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
-      )}
+      )
     </>
   );
 };

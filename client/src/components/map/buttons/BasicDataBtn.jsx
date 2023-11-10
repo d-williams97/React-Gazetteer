@@ -7,12 +7,10 @@ import styles from "./Button.module.css";
 import modalStyles from './Modal.module.css'
 
 
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Table from 'react-bootstrap/Table';
+import {Button, Modal, Table} from "react-bootstrap/"
 import numeral from "numeral";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCity, faEarthAmericas, faPerson, faMountain, faFlag} from '@fortawesome/free-solid-svg-icons'
+import { faCity, faEarthAmericas, faPerson, faMountain, faFlag, faInfo} from '@fortawesome/free-solid-svg-icons'
 import infoIcon from "../../../assets/info.png";
 
 
@@ -29,7 +27,7 @@ const BasicDataBtn = (props) => {
     setTimeout(() => {
       setLoading(false);
     }, 2000)
-  },[basicData])
+  },[modalShow])
 
 
 
@@ -58,20 +56,17 @@ const BasicDataBtn = (props) => {
   return (
     <>
       <button className={styles.button} onClick={basicDataBtnHandler} >
-        <img
-          src={infoIcon}
-          className={styles.icon}
-        />
+      <FontAwesomeIcon icon={faInfo} style={{fontSize: '1.5rem'}} />
       </button>
 
-      {basicData && <Modal 
+      <Modal 
       show={modalShow} 
       onHide={handleModalClose} 
       animation={true} 
       centered
       > <ModalPreloader loading={loading} />
         <Modal.Header className={modalStyles.basicDataModal}>
-          <Modal.Title className={modalStyles.basicDataTitle}>{`Overview - ${props.geoJsonData.properties.name}`}</Modal.Title>
+          <Modal.Title className={modalStyles.basicDataTitle}>{ basicData &&`Overview - ${props.geoJsonData.properties.name}`}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Table striped hover responsive className={modalStyles.table}>
@@ -91,21 +86,21 @@ const BasicDataBtn = (props) => {
         <tr>
           <td><FontAwesomeIcon icon={faPerson} className={modalStyles.basicIcon}/></td>
           <td>Population</td>
-          <td className={modalStyles.td}>{numeral(basicData.population).format('0,0')}</td>
+          <td className={modalStyles.td}>{ basicData && numeral(basicData.population).format('0,0')}</td>
         </tr>
 
         <tr>
           <td><FontAwesomeIcon icon={faMountain} className={modalStyles.basicIcon}/></td>
           <td>Area</td>
-          <td className={modalStyles.td}> <p>{`${numeral(basicData.areaInSqKm).format('0,0')} km`}</p></td>
+          <td className={modalStyles.td}> <p>{ basicData && `${numeral(basicData.areaInSqKm).format('0,0')} km`}</p></td>
         </tr>
 
         <tr>
           <td><FontAwesomeIcon icon={faFlag} className={modalStyles.basicIcon}/></td>
           <td>Flag</td>
           <td className={modalStyles.td}> { flag && flag ? 
-            <img src={ flag.flags.png} className={modalStyles.flag} /> :
-            <div className={modalStyles.flag2}>{flag.flag}</div>
+            <img src={ flag && flag.flags.png} className={modalStyles.flag} /> :
+            <div className={modalStyles.flag2}>{ flag && flag.flag}</div>
           }
           </td>
         </tr>
@@ -118,7 +113,7 @@ const BasicDataBtn = (props) => {
             Close
           </Button>
         </Modal.Footer>
-      </Modal> }
+      </Modal> 
     </>
   );
 };

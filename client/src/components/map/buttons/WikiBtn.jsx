@@ -23,8 +23,8 @@ const WikiBtn = (props) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
-  }, [wikiData]);
+    }, 3500);
+  }, [modalShow]);
 
   const wikiBtnHandler = async () => {
     setModalShow(true);
@@ -54,32 +54,30 @@ const WikiBtn = (props) => {
   return (
     <>
       <button className={styles.wikiBtn} onClick={wikiBtnHandler}>
-        <FontAwesomeIcon icon={faW} />
+        <FontAwesomeIcon icon={faW} style={{fontSize: '1.3rem'}}/>
       </button>
-
-      {wikiData && (
+       (
         <Modal
           show={modalShow}
           onHide={handleModalClose}
           animation={true}
-          centered
+          centered 
         >
           <ModalPreloader loading={loading} />
           <Modal.Header className={modalStyles.basicDataModal}>
             <Modal.Title
               className={modalStyles.basicDataTitle}
-            >{`Wiki Summary - ${props.geoJsonData.properties.name}`}</Modal.Title>
+            >{ wikiData && `Wiki Summary - ${props.geoJsonData.properties.name}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="text-center">
-              <img className="w-50 img-fluid" src={wikiImg} />
+              <img className="w-50 img-fluid" src={wikiImg && wikiImg} />
             </div>
             <div>
-              <p className="mt-3 text-wrap text-black">{ `${wikiSummary} ...`}</p>
+              <p className="mt-3 text-wrap text-black">{ wikiSummary && `${wikiSummary} ...`}</p>
               <a
-                href={`https://${wikiUrl}`}
+                href={wikiUrl && `https://${wikiUrl}`}
                 target="_blank"
-                className="link-opacity-50"
               >
                 Find out more
               </a>
@@ -91,7 +89,7 @@ const WikiBtn = (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
-      )}
+      )
     </>
   );
 };

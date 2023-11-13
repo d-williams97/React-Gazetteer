@@ -20,50 +20,53 @@ const app = express();
 app.use(express.json()); // / without specifying the request URL these functions are run everytine a request is made 
 app.use(cors());
 
+app.listen(3001, () => {
+    console.log('working')
+})
 
 
-// --- Getting all country data --- //
-app.use('/country-data', countryRoute);
+// // --- Getting all country data --- //
+// app.use('/country-data', countryRoute);
 
-// ---- Getting Border data ---- //
-app.use('/bounds-data', boundsRoute);
+// // ---- Getting Border data ---- //
+// app.use('/bounds-data', boundsRoute);
 
-// --- Getting Airport data --- //
-app.use('/airport-data', airportRoute);
+// // --- Getting Airport data --- //
+// app.use('/airport-data', airportRoute);
 
-// --- Getting City data --- //
-app.use('/city-data', cityRoute );
+// // --- Getting City data --- //
+// app.use('/city-data', cityRoute );
 
-// -- BASIC DATA MODAL --//
-app.use('/basic-data', basicDataRoute);
+// // -- BASIC DATA MODAL --//
+// app.use('/basic-data', basicDataRoute);
 
-// Get Flag Data //
-app.use('/flag-data', flagRoute);
-
-
-// -- WEATHER MODAL -- //
-
-// Get Capital City data //
-app.use('/capital-city',capitalCityRoute);
-
-// Get Weather data //
-app.use('/weather', weatherRoute);
+// // Get Flag Data //
+// app.use('/flag-data', flagRoute);
 
 
-// -- Wiki MODAL -- //
-app.use('/wiki-data',wikiRoute);
+// // -- WEATHER MODAL -- //
+
+// // Get Capital City data //
+// app.use('/capital-city',capitalCityRoute);
+
+// // Get Weather data //
+// app.use('/weather', weatherRoute);
 
 
-// -- ER MODAL -- //
-// Get currency data //
-app.use('/currency',currencyRoute);
-
-// Get exchange rate data //
-app.use('/er', exchangeRateRoute);
+// // -- Wiki MODAL -- //
+// app.use('/wiki-data',wikiRoute);
 
 
-// Get TimeZone data //
-app.use('/timezone',timeZoneRoute);
+// // -- ER MODAL -- //
+// // Get currency data //
+// app.use('/currency',currencyRoute);
+
+// // Get exchange rate data //
+// app.use('/er', exchangeRateRoute);
+
+
+// // Get TimeZone data //
+// app.use('/timezone',timeZoneRoute);
 
 
 

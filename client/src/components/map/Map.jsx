@@ -15,7 +15,8 @@ import WikiBtn from "./buttons/WikiBtn";
 import ExchangeRateBtn from "./buttons/ExchangeRateBtn";
 import TimeZoneBtn from "./buttons/TimeZoneBtn";
 
-const API_BASE = "http://localhost:3001";
+// const API_BASE = "http://localhost:3001";
+const API_BASE = "https://react-gazetteer-server.vercel.app/";
 
 
 const Map = (props) => {

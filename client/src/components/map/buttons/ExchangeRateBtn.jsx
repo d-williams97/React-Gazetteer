@@ -11,7 +11,8 @@ import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 
-const API_BASE = "http://localhost:3001";
+// const API_BASE = "http://localhost:3001";
+const API_BASE = "https://react-gazetteer-server.vercel.app"
 
 const ExchangeRateBtn = (props) => {
 

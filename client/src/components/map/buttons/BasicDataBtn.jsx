@@ -14,7 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCity, faEarthAmericas, faPerson, faMountain, faFlag, faInfo} from '@fortawesome/free-solid-svg-icons'
 
 
-const API_BASE = 'http://localhost:3001'
+// const API_BASE = 'http://localhost:3001'
+const API_BASE = "https://react-gazetteer-server.vercel.app"
+
 
 const BasicDataBtn = (props) => {
   const [modalShow, setModalShow] = useState(false);

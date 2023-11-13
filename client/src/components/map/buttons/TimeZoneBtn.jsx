@@ -8,11 +8,11 @@ import modalStyles from "./Modal.module.css";
 
 import { Modal, Button, Row, Col, Container } from "react-bootstrap";
 
-import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
-const API_BASE = "http://localhost:3001";
+// const API_BASE = "http://localhost:3001";
+const API_BASE = "https://react-gazetteer-server.vercel.app"
 let localTime;
 let sunrise;
 let sunset;

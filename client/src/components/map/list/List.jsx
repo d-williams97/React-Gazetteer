@@ -5,7 +5,8 @@ import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useMap } from "react-leaflet";
 
-const API_BASE = "http://localhost:3001";
+const API_BASE = "https://react-gazetteer-server.vercel.app";
+// const API_BASE = "http://localhost:3001";
 let countryName;
 let countryCode;
 let selectedCountry;

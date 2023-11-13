@@ -66,6 +66,6 @@ app.use('/timezone',timeZoneRoute);
 
 
 
-app.listen(3001, () => {
-    console.log('app is running')
-})
+// app.listen(3001, () => {
+//     console.log('app is running')
+// })

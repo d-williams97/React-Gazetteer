@@ -123,6 +123,7 @@ const WeatherBtn = (props) => {
           onHide={handleModalClose}
           animation={true}
           centered
+
         >
           <ModalPreloader loading={loading} />
           <Modal.Header className={modalStyles.basicDataModal}>
@@ -144,10 +145,9 @@ const WeatherBtn = (props) => {
                     <Col className="text-center">
                       <Image
                         fluid
-                        id="todayIcon"
                         src={icon}
-                        alt="Weather icon"
-                        title="Weather icon"
+                        alt="Today Weather icon"
+                        title="Today Weather icon"
                       />
                     </Col>
                     <Col className="text-center">
@@ -195,8 +195,8 @@ const WeatherBtn = (props) => {
                     <Col className="text-center">
                       <Image
                         src={icon1}
-                        alt="Weather icon 2"
-                        title="Weather icon 2"
+                        alt="Day 2 weather icon"
+                        title="Day 2 weather icon "
                       />
                     </Col>
                   </Row>
@@ -228,10 +228,9 @@ const WeatherBtn = (props) => {
                     </Col>
                     <Col className="text-center">
                       <Image
-                        id="day2Icon"
                         src={icon2}
-                        alt="Weather icon 2"
-                        title="Weather icon 2"
+                        alt="Day 3 weather icon "
+                        title="Day 3 weather icon "
                       />
                     </Col>
                   </Row>

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { MapContainer, GeoJSON } from "react-leaflet";
 
+
 import "leaflet/dist/leaflet.css";
 
 import List from "./list/List";
@@ -16,13 +17,15 @@ import TimeZoneBtn from "./buttons/TimeZoneBtn";
 
 const API_BASE = "http://localhost:3001";
 
+
 const Map = (props) => {
   // Getting country data for select
   const [countryData, setCountryData] = useState(null);
+  
 
 
   const getCountries = async () => {
-    const data = await fetch(`${API_BASE}/country-data`)
+    await fetch(`${API_BASE}/country-data`)
       .then((res) => res.json())
       .then((data) => {
         setCountryData(data);
@@ -106,7 +109,6 @@ const [cities, setCities] = useState(null);
           setCountryData={setCountryData}
           getAirports={airportsHandler}
           getCities={citiesHandler}
-          location={props.location}
         />
         <MapLayers />
         < Airports airports={airports} />
@@ -121,7 +123,7 @@ const [cities, setCities] = useState(null);
           }}
         />
       </MapContainer>
-    </>
+      </>
   );
 };
 

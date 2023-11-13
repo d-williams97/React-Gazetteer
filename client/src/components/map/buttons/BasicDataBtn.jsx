@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+
 
 import ModalPreloader from "../../modal preloader/ModalPreloader";
 
@@ -11,7 +12,6 @@ import {Button, Modal, Table} from "react-bootstrap/"
 import numeral from "numeral";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCity, faEarthAmericas, faPerson, faMountain, faFlag, faInfo} from '@fortawesome/free-solid-svg-icons'
-import infoIcon from "../../../assets/info.png";
 
 
 const API_BASE = 'http://localhost:3001'
@@ -28,7 +28,6 @@ const BasicDataBtn = (props) => {
       setLoading(false);
     }, 2000)
   },[modalShow])
-
 
 
   const basicDataBtnHandler = async () => {
@@ -99,7 +98,7 @@ const BasicDataBtn = (props) => {
           <td><FontAwesomeIcon icon={faFlag} className={modalStyles.basicIcon}/></td>
           <td>Flag</td>
           <td className={modalStyles.td}> { flag && flag ? 
-            <img src={ flag && flag.flags.png} className={modalStyles.flag} /> :
+            <img src={ flag && flag.flags.png} className={modalStyles.flag} alt="Flag image"/> :
             <div className={modalStyles.flag2}>{ flag && flag.flag}</div>
           }
           </td>

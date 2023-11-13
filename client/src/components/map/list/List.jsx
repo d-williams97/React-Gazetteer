@@ -39,6 +39,7 @@ const List = (props) => {
     if (props.countryData) {
       selectedCountry = props.countryData.find(
         (country) => country.properties.iso_a2 === value
+        // where I can do useContext.
       );
     }
     if (selectedCountry) {
@@ -55,7 +56,7 @@ const List = (props) => {
   return (
     <div className={styles.list}>
       <Form.Select
-        aria-label="Default select example"
+        aria-label="Form select listing country names as select options"
         value={selectVal}
         onChange={(e) => {
           changeCountryHandler(e.target.value);

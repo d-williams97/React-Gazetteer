@@ -71,7 +71,7 @@ const WikiBtn = (props) => {
           </Modal.Header>
           <Modal.Body>
             <div className="text-center">
-              <img className="w-50 img-fluid" src={wikiImg && wikiImg} />
+              <img className="w-50 img-fluid" src={wikiImg && wikiImg} alt="Select country Wiki image" />
             </div>
             <div>
               <p className="mt-3 text-wrap text-black">{ wikiSummary && `${wikiSummary} ...`}</p>

@@ -2,95 +2,68 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 
-const app = express();
-app.use(express.json());
+const countryRoute = require('./routes/countryRoute');
+const airportRoute = require('./routes/airportRoute');
+const cityRoute = require('./routes/cityRoute');
+const boundsRoute = require('./routes/boundsRoute');
+const basicDataRoute = require('./routes/basicDataRoute');
+const flagRoute = require('./routes/flagRoute');
+const weatherRoute = require('./routes/weatherRoute');
+const capitalCityRoute = require('./routes/capitalCityRoute');
+const wikiRoute = require('./routes/wikiRoute');
+const currencyRoute = require('./routes/currencyRoute');
+const exchangeRateRoute = require('./routes/exchangeRateRoute');
+const timeZoneRoute = require('./routes/timeZoneRoute');
+
+
+const app = express(); 
+app.use(express.json()); // / without specifying the request URL these functions are run everytine a request is made 
 app.use(cors());
 
 
 
-
-
-// ---- Getting GeoJSON data ---- //
-app.get('/country-data', async (req, res) => {
-    try {
-        const data = require('./assets/countryBorders.geo.json').features;
-        
-        data.forEach(country => country.key = Math.random())
-        data.sort((a, b) => {
-            return a.properties.name.localeCompare(b.properties.name);
-          });
-    
-        res.status(200).json(data);
-    } catch(e) {
-        console.error('Error getting country data', e)
-        res.status(500).json({error: 'internal server error', err})
-    }
-  
-})
-
+// --- Getting all country data --- //
+app.use('/country-data', countryRoute);
 
 // ---- Getting Border data ---- //
-app.get('/bounds-data/:countryName', async (req, res) => {
-    try {
-        let countryData = req.params.countryName;
-        let countryName = countryData.replace(/ /g, '%20'); //regex that replaces all spaces 
-        
-        // fetch data
-        let url = `https://api.opencagedata.com/geocode/v1/json?q=${countryName}&key=e3489716a6574283b20a91a3349be943&pretty=1`;
-        const response = await axios.get(url)
-        .catch((e) => {
-            console.error('Error getting API data', e)
-            res.status(500).json({error: 'internal server error', err})
-        })
-
-        res.status(200).json(response.data.results[0])
-
-    } catch (e) {
-        console.error('Error getting border', e)
-        res.status(500).json({error: 'internal server error', err})
-
-    }
-})
-
+app.use('/bounds-data', boundsRoute);
 
 // --- Getting Airport data --- //
+app.use('/airport-data', airportRoute);
 
-app.post('/city-data', async (req, res) => {
-    try {
-        let countryCodeData = req.body.countryCode;
-        let countryCode = countryCodeData.replace('-99', 'SO');
-        let url = `http://api.geonames.org/searchJSON?q=airport&country=${countryCode}&maxRows=50&username=kwasimodo`
+// --- Getting City data --- //
+app.use('/city-data', cityRoute );
 
-        const response = await axios.get(url)
-        .catch((e) => {
-            console.error('Error getting API data: ',e)
-            res.status(500).json({error: 'Error getting API data', err})
-        })
+// -- BASIC DATA MODAL --//
+app.use('/basic-data', basicDataRoute);
 
-        let airportData = [];
-        response.data.geonames.forEach((e) => {
-            let obj = {};
-            obj.lng = e.lng;
-            obj.lat = e.lat;
-            obj.name = e.name;
-
-            airportData.push(obj)
-        } )
-
-        res.status(200).json(airportData);
+// Get Flag Data //
+app.use('/flag-data', flagRoute);
 
 
-    } catch (e) {
-        console.error('Error getting airport API data: ',e)
-        res.status(500).json({error: 'Error getting API data', err})
-        
+// -- WEATHER MODAL -- //
 
-    }
+// Get Capital City data //
+app.use('/capital-city',capitalCityRoute);
 
-})
-
+// Get Weather data //
+app.use('/weather', weatherRoute);
 
 
+// -- Wiki MODAL -- //
+app.use('/wiki-data',wikiRoute);
+
+
+// -- ER MODAL -- //
+// Get currency data //
+app.use('/currency',currencyRoute);
+
+// Get exchange rate data //
+app.use('/er', exchangeRateRoute);
+
+
+// Get TimeZone data //
+app.use('/timezone',timeZoneRoute);
 
 
 

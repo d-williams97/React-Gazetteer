@@ -20,10 +20,6 @@ const app = express();
 app.use(express.json()); // / without specifying the request URL these functions are run everytine a request is made 
 app.use(cors());
 
-app.listen(3001, () => {
-    console.log('working')
-})
-
 
 // --- Getting all country data --- //
 app.use('/country-data', countryRoute);
